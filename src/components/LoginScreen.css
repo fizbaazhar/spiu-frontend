@@ -1,0 +1,39 @@
+.login-container {
+  min-height: 100vh;
+  background-color: #f8f9fa; /* Light grey background */
+}
+
+.login-container.dark-mode {
+  background-color: #1b1e1f !important; /* Dark mode background */
+}
+
+.login-box {
+  background-color: #ffffff;
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-logo {
+  max-height: 70px;
+  width: auto;
+}
+
+.log-in-button {
+  background-color: #80cd28 !important;
+  color: #fff;
+  outline: none;
+  border: none;
+}
+
+.log-in-button:hover {
+  background-color: #6cbf22 !important;
+}
+
+.log-in-button:focus,
+.log-in-button:active,
+.log-in-button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: #6cbf22 !important;
+  border: none;
+}

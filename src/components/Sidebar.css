@@ -1,0 +1,129 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Take full viewport height */
+  background-color: #f8f9fa; /* Light background */
+  border-right: 1px solid #dee2e6; /* Separator */
+  width: 280px; /* Adjust width as needed */
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+  overflow: hidden; /* Hide overflow at the main div level */
+}
+
+/* Dark mode styles */
+.dark-mode .sidebar-container {
+  background-color: #2d3032;
+  color: #f0f0f0;
+}
+
+.dark-mode .sidebar-container .border-bottom,
+.dark-mode .sidebar-container .border-top,
+.dark-mode .sidebar-logo-area,
+.dark-mode .sidebar-footer {
+  background-color: #2d3032;
+  border-color: #3a3f42 !important;
+}
+
+/* Ensure any other border elements in the sidebar get the same border color */
+.dark-mode .sidebar-container [class*="border"] {
+  border-color: #3a3f42 !important;
+}
+
+.search-bar {
+  flex-shrink: 0; /* Prevent search bar from shrinking */
+}
+
+.location-list {
+  overflow-y: auto; /* Allow scrolling for the list only */
+  flex: 1 1 0; /* Allow list to take remaining space and shrink */
+  min-height: 0; /* Ensure scrolling works inside flex container */
+}
+
+.sidebar-item {
+  cursor: pointer;
+  font-size: 0.9rem; /* Slightly smaller text */
+}
+
+.sidebar-item.active {
+  font-weight: bold;
+}
+
+.sidebar-footer {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
+  min-height: 0;
+  overflow: hidden; /* Prevent overall container scroll */
+}
+
+/* Style the logo area and the logo itself */
+.sidebar-logo-area {
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.sidebar-logo {
+  max-height: 120px;
+  width: auto;
+}
+
+.sidebar-list-item {
+  cursor: pointer;
+  /* Add transition for smoother hover/active states if needed */
+  transition: background-color 0.15s ease-in-out;
+}
+
+/* Footer styling - pushes it to the bottom */
+.sidebar-footer {
+  flex-shrink: 0; /* Prevent shrinking */
+  background-color: #f8f9fa; /* Match sidebar bg or choose another */
+}
+
+.powered-by-logo {
+  /* max-height: 30px; original */
+  max-height: 70px;
+  width: auto;
+  margin: 0;
+}
+
+.sidebar-list-item.active {
+  background-color: #80cd28;
+  color: white;
+  font-weight: bold;
+}
+
+.sidebar-list-item.zoomed {
+  background-color: #80cd28;
+  font-weight: bold;
+}
+
+/* Ensure active state takes precedence over zoomed state */
+.sidebar-list-item.active.zoomed {
+  background-color: #80cd28;
+  border-color: #80cd28;
+}
+
+/* City header styling */
+.sidebar-city-header {
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.dark-mode .sidebar-city-header {
+  background-color: #2d3032;
+  border-color: #3a3f42 !important;
+}
+
+.city-caret {
+  display: inline-block;
+  width: 1em;
+}
+
+/* Smaller text for station items under city */
+.station-item {
+  font-size: 0.8rem;
+}

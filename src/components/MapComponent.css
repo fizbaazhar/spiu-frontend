@@ -1,0 +1,106 @@
+.custom-marker-label {
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  white-space: nowrap;
+}
+
+.aqi-marker-label {
+  text-align: center;
+  line-height: 1.2;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  background: none !important;
+}
+
+.location-marker-label {
+  text-align: center;
+  line-height: 1.2;
+  font-size: 15px !important;
+  font-weight: bold !important;
+  margin-top: 4rem;
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+}
+
+/* Dark mode styles */
+.location-marker-label.dark-mode {
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+/* Light mode styles */
+.location-marker-label.light-mode {
+  color: black !important;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.reset-view-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 5;
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  width: auto;
+  height: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: transform 0.2s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.reset-view-btn:focus,
+.reset-view-btn:active {
+  outline: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.reset-view-btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.reset-view-btn svg {
+  display: block;
+  color: #111;
+}
+
+.reset-view-btn.dark-mode svg {
+  color: #ffffff;
+}
+
+.reset-view-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Ensure no background is applied in dark mode container */
+.reset-view-btn.dark-mode {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Hide most default Google Maps UI controls/overlays for a cleaner look. 
+   Note: Google attribution/logo must remain visible per their Terms of Service. */
+.gm-bundled-control,
+.gm-fullscreen-control,
+.gm-style-mtc,
+.gm-svpc,
+.gmnoprint .gm-style-cc,
+.gm-style-cc span[style*="text"]:not(:first-child) {
+  display: none !important;
+}

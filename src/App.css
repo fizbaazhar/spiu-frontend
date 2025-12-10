@@ -1,0 +1,324 @@
+/* Keep .App if you need specific styles for the container, but ensure it doesn't add padding/margin */
+.App {
+  /* Remove padding/margin if you want map edge-to-edge */
+  /* padding: 0; */
+  /* margin: 0; */
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Navbar Styles --- */
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.navbar-nav .nav-link {
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #80cd28 !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: #80cd28 !important;
+}
+
+/* Dark mode navbar */
+.dark-mode .navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .navbar-nav .nav-link:hover {
+  color: #80cd28 !important;
+}
+
+.dark-mode .navbar-nav .nav-link.active {
+  color: #80cd28 !important;
+}
+
+/* Navbar dropdown styling */
+.navbar .dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid #dee2e6;
+}
+
+.dark-mode .navbar .dropdown-menu {
+  background-color: #2d3032;
+  border-color: #3a3f42;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .navbar .dropdown-item {
+  color: #f0f0f0;
+}
+
+.dark-mode .navbar .dropdown-item:hover {
+  background-color: #3a3f42;
+  color: #f0f0f0;
+}
+
+/* Dark dropdown hover for all menus */
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #e9ecef;
+  color: #212529;
+}
+
+.dark-mode .dropdown-menu .dropdown-item:hover,
+.dark-mode .dropdown-menu .dropdown-item:focus {
+  background-color: #3a3f42;
+  color: #f8f9fa;
+}
+
+/* Ensure readable text on dark dropdown menus by default */
+.dark-mode .dropdown-menu.bg-dark .dropdown-item,
+.dark-mode .dropdown-menu.dropdown-menu-dark .dropdown-item {
+  color: #f8f9fa;
+}
+
+/* Mobile navbar adjustments */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    padding: 1rem 0;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .dark-mode .navbar-nav .nav-link {
+    border-bottom-color: #3a3f42;
+  }
+
+  .navbar-nav .nav-link:last-child {
+    border-bottom: none;
+  }
+}
+
+/* --- Dark Mode Styles --- */
+.dark-mode {
+  background-color: #1b1e1f !important;
+  color: #f0f0f0;
+}
+
+/* Login container background */
+.dark-mode.login-container {
+  background-color: #1b1e1f !important;
+}
+
+/* Mobile sidebar (Offcanvas component) */
+.dark-mode .offcanvas {
+  background-color: #2d3032;
+  color: #f0f0f0;
+  border-color: #3a3f42;
+}
+
+.dark-mode .offcanvas-header {
+  border-bottom-color: #3a3f42;
+  background-color: #2d3032;
+}
+
+.dark-mode .offcanvas-body {
+  background-color: #2d3032;
+}
+
+.dark-mode .offcanvas-title {
+  color: #f0f0f0;
+}
+
+.dark-mode .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.dark-mode .bg-light {
+  background-color: #2d3032 !important;
+  color: #f0f0f0;
+}
+
+.dark-mode .border-end {
+  border-color: #3a3f42 !important;
+}
+
+/* Additional sidebar specific styling */
+.dark-mode .sidebar-col.bg-light {
+  background-color: #2d3032 !important;
+}
+
+.dark-mode .list-group-item {
+  background-color: #2d3032;
+  color: #f0f0f0;
+  border-color: #3a3f42;
+}
+
+.dark-mode .list-group-item:hover {
+  background-color: #3a3f42;
+}
+
+.dark-mode .list-group-item.active {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.dark-mode .legend {
+  background-color: rgba(45, 48, 50, 0.9);
+  color: #f0f0f0;
+  border: 1px solid #3a3f42;
+}
+
+.dark-mode .card {
+  background-color: #2d3032;
+  color: #f0f0f0;
+  border-color: #3a3f42;
+}
+
+.dark-mode .card-header {
+  background-color: #1b1e1f;
+  border-color: #3a3f42;
+}
+
+.dark-mode .btn-light {
+  background-color: #3a3f42;
+  color: #f0f0f0;
+  border-color: #4a4f52;
+}
+
+.dark-mode .close {
+  color: #f0f0f0;
+}
+
+/* Sign out button in dark mode */
+.dark-mode .btn-outline-danger.dark-signout {
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+  background-color: transparent;
+}
+
+.dark-mode .btn-outline-danger.dark-signout:hover {
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+.dark-mode .sidebar-footer {
+  background-color: #2d3032;
+}
+
+/* Login form in dark mode */
+.dark-mode .login-box {
+  background-color: #2d3032;
+  border: 1px solid #3a3f42;
+}
+
+.dark-mode .form-control {
+  background-color: #1b1e1f;
+  border-color: #3a3f42;
+  color: #f0f0f0;
+}
+
+.dark-mode .form-control::placeholder {
+  color: #aaa;
+}
+
+.date-time-container {
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid #3a3f42;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .date-time-container {
+  background-color: #3a3f42;
+  color: #f0f0f0;
+  border: 1px solid #3a3f42;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Legend Mobile Toggle Styles --- */
+
+/* Hide container by default on mobile */
+.legend-container.mobile-hidden {
+  display: none;
+}
+
+/* Style container when visible on mobile */
+.legend-container.mobile-visible {
+  display: block; /* Make the container visible */
+  position: absolute;
+  top: 45px; /* Position below the toggle button (adjust as needed) */
+  right: 10px;
+  z-index: 1000; /* Ensure it's above map, below toggle button */
+}
+
+/* Ensure .legend inside the container uses static position on mobile */
+.legend-container.mobile-visible .legend {
+  position: static;
+}
+
+@media (min-width: 768px) {
+  /* Sidebar takes space */
+  .sidebar-col {
+    padding: 10px 15px;
+  }
+}
+
+/* Consistent border colors for all elements in dark mode */
+.dark-mode [class*="border"],
+.dark-mode .border,
+.dark-mode .border-top,
+.dark-mode .border-end,
+.dark-mode .border-bottom,
+.dark-mode .border-start {
+  border-color: #3a3f42 !important;
+}
+
+/* --- Modern Loader Styles --- */
+.loader-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2d3032;
+  z-index: 999999;
+}
+
+.loader-bar {
+  position: relative;
+  width: min(480px, 80%);
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loader-bar > span {
+  position: absolute;
+  left: -40%;
+  top: 0;
+  height: 100%;
+  width: 40%;
+  background: #80cd28;
+  border-radius: 2px;
+  animation: loaderSlide 1.2s ease-in-out infinite;
+}
+
+@keyframes loaderSlide {
+  0% {
+    left: -40%;
+    width: 40%;
+  }
+  50% {
+    left: 30%;
+    width: 50%;
+  }
+  100% {
+    left: 100%;
+    width: 40%;
+  }
+}

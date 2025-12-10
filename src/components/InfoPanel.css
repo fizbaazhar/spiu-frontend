@@ -1,0 +1,126 @@
+/* Default styles (mobile-first approach for bottom sheet) */
+.info-panel {
+  position: fixed; /* Fixed position for bottom sheet */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* Full width */
+  max-height: 60vh; /* Max height 60% of viewport height */
+  height: auto; /* Height adjusts to content, up to max-height */
+  background-color: rgba(255, 255, 255, 1); /* Opaque background */
+  border-top-left-radius: 12px; /* Rounded top corners */
+  border-top-right-radius: 12px;
+  border-top: 1px solid #dee2e6; /* Subtle top border */
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15); /* Shadow adjusted for bottom sheet */
+  z-index: 1040; /* Below Offcanvas (1045/1050) but above map */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  transition: transform 0.3s ease-in-out; /* Slide animation */
+  display: flex; /* Use flexbox for internal layout */
+  flex-direction: column;
+  transform: translateY(0); /* Ensure it's visible */
+}
+
+/* Dark mode styling for info panel */
+.info-panel.dark-mode {
+  background-color: #1b1e1f;
+  color: #f0f0f0;
+  border-top: 1px solid #3a3f42;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.info-panel.dark-mode .border-bottom {
+  border-color: #3a3f42 !important;
+}
+
+.info-panel.dark-mode .dropdown-menu {
+  background-color: #2d3032;
+  border-color: #3a3f42;
+}
+
+.info-panel.dark-mode .dropdown-item {
+  color: #f0f0f0;
+}
+
+.info-panel.dark-mode .dropdown-item:hover {
+  background-color: #3a3f42;
+}
+
+.info-panel.dark-mode .dropdown-item.active {
+  background-color: #0d6efd;
+}
+
+/* Invert close button in dark mode */
+.info-panel.dark-mode .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.info-panel.dark-mode .text-muted {
+  color: #aaa !important;
+}
+
+/* Adjust padding/margins for mobile */
+.info-panel .container-fluid {
+  padding-top: 0.75rem; /* Add padding top */
+}
+
+/* Ensure the chart container allows the chart to grow */
+.chart-container {
+  position: relative; /* Needed for chart.js responsiveness */
+  min-height: 250px; /* Slightly smaller min-height */
+  height: 100%; /* Try to take remaining height */
+  padding-bottom: 1rem; /* Add some padding at the bottom */
+}
+
+/* Style react-datepicker input */
+.react-datepicker-wrapper input {
+  width: 100%; /* Make date picker input take full width of its column */
+}
+
+/* You might need to adjust bootstrap column padding if things look too cramped */
+.info-panel .row {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+/* Styles for medium screens and up (768px and above) - Restore original floating panel */
+@media (min-width: 768px) {
+  .info-panel {
+    position: absolute; /* Back to absolute positioning */
+    top: 5%;
+    left: 5%;
+    bottom: auto; /* Remove fixed bottom positioning */
+    right: auto; /* Remove fixed right positioning */
+    width: 90%;
+    max-height: 90%; /* Restore original max-height */
+    height: 90%;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px; /* Restore original border-radius */
+    border-top: none; /* Remove top border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 10; /* Restore original z-index */
+    /* transform: none; */ /* Reset transform if needed */
+  }
+
+  .info-panel.dark-mode {
+    background-color: rgba(
+      27,
+      30,
+      31,
+      0.95
+    ); /* Semi-transparent dark background */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .info-panel .container-fluid {
+    padding-top: initial; /* Reset padding */
+  }
+
+  .info-panel .row {
+    padding-left: 0.5rem; /* Restore original padding */
+    padding-right: 0.5rem;
+  }
+
+  .chart-container {
+    min-height: 300px; /* Restore original min-height */
+  }
+}
