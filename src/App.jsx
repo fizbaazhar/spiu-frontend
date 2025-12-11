@@ -28,7 +28,7 @@ import {
 } from "./data/stationCoordinates.js";
 
 // Define API base URL and API key
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://72.62.21.213:8001';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://72.62.21.213:8001';
 const API_KEY = import.meta.env.VITE_API_KEY || '7b2f49c1e0e447c6a2bde74b81f51a87';
 
 // Log configuration for debugging

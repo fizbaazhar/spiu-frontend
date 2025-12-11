@@ -31,6 +31,7 @@ import {
   labelWithUnitExport,
   normalizeUnitForExport,
   displayNameForKey,
+  getUnit,
 } from "../data/units.js";
 import { isErrorValue } from "../utils/errors.ts";
 
@@ -198,6 +199,20 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const API_KEY = import.meta.env.VITE_API_KEY;
 
+  // Get pollutantTypes with station-specific units
+  const pollutantTypesWithStationUnits = useMemo(() => {
+    const stationName = location?.name || null;
+    const result = { ...pollutantTypes };
+    // Update units for each pollutant based on station
+    Object.keys(result).forEach((key) => {
+      if (key !== "ALL" && result[key].unit) {
+        const stationUnit = getUnit(key, stationName);
+        result[key] = { ...result[key], unit: stationUnit };
+      }
+    });
+    return result;
+  }, [location?.name]);
+
   // Cache expiration time (1 hour in milliseconds)
   const CACHE_EXPIRY = 60 * 60 * 1000; // 1 hour
 
@@ -224,24 +239,27 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
   const downloadCSV = () => {
     if (!chartApiData || chartApiData.length === 0) return;
 
-    // Define the exact order and short names for columns
+    // Get station-specific units
+    const stationName = location?.name || null;
+
+    // Define the exact order and short names for columns with station-specific units
     const columnOrder = [
       { key: "Date_Time", label: "Date & Time", unit: "" },
-      { key: "O3", label: "O3", unit: "ppb" },
-      { key: "CO", label: "CO", unit: "ppm" },
-      { key: "SO2", label: "SO2", unit: "ppb" },
-      { key: "NO", label: "NO", unit: "ppb" },
-      { key: "NO2", label: "NO2", unit: "ppb" },
-      { key: "NOX", label: "NOX", unit: "ppb" },
-      { key: "PM10", label: "PM10", unit: "µg/m3" },
-      { key: "PM25", label: "PM2.5", unit: "µg/m3" },
-      { key: "WS", label: "WS", unit: "m/s" },
-      { key: "WD", label: "WD", unit: "Deg" },
-      { key: "Temp", label: "TEMPERAT", unit: "C°" },
-      { key: "RH", label: "RH", unit: "%" },
-      { key: "BP", label: "BP", unit: "hPa" },
-      { key: "Rain", label: "Rain", unit: "mm" },
-      { key: "SR", label: "SR", unit: "W/m²" },
+      { key: "O3", label: "O3", unit: normalizeUnitForExport(getUnit("O3", stationName)) },
+      { key: "CO", label: "CO", unit: normalizeUnitForExport(getUnit("CO", stationName)) },
+      { key: "SO2", label: "SO2", unit: normalizeUnitForExport(getUnit("SO2", stationName)) },
+      { key: "NO", label: "NO", unit: normalizeUnitForExport(getUnit("NO", stationName)) },
+      { key: "NO2", label: "NO2", unit: normalizeUnitForExport(getUnit("NO2", stationName)) },
+      { key: "NOX", label: "NOX", unit: normalizeUnitForExport(getUnit("NOX", stationName)) },
+      { key: "PM10", label: "PM10", unit: normalizeUnitForExport(getUnit("PM10", stationName)) },
+      { key: "PM25", label: "PM2.5", unit: normalizeUnitForExport(getUnit("PM25", stationName)) },
+      { key: "WS", label: "WS", unit: normalizeUnitForExport(getUnit("WS", stationName)) },
+      { key: "WD", label: "WD", unit: normalizeUnitForExport(getUnit("WD", stationName)) },
+      { key: "Temp", label: "TEMPERAT", unit: normalizeUnitForExport(getUnit("Temp", stationName)) },
+      { key: "RH", label: "RH", unit: normalizeUnitForExport(getUnit("RH", stationName)) },
+      { key: "BP", label: "BP", unit: normalizeUnitForExport(getUnit("BP", stationName)) },
+      { key: "Rain", label: "Rain", unit: normalizeUnitForExport(getUnit("Rain", stationName)) },
+      { key: "SR", label: "SR", unit: normalizeUnitForExport(getUnit("SR", stationName)) },
       { key: "AQI", label: "AQI", unit: "" },
     ];
 
@@ -518,7 +536,7 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
 
   // Memoize chart data structure using fetched chartApiData
   const chartData = useMemo(() => {
-    const config = pollutantTypes[selectedPollutant];
+    const config = pollutantTypesWithStationUnits[selectedPollutant];
     if (!config || !chartApiData || chartApiData.length === 0)
       return { datasets: [] };
 
@@ -527,7 +545,7 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
       const allDatasets = pollutants
         .filter((pollutant) => visiblePollutants.has(pollutant))
         .map((pollutant) => {
-          const pollutantConfig = pollutantTypes[pollutant];
+          const pollutantConfig = pollutantTypesWithStationUnits[pollutant];
           const validDataPoints = chartApiData
             .map((d) => ({
               x: parseISO(d.Date_Time),
@@ -577,12 +595,12 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
         ],
       };
     }
-  }, [chartApiData, selectedPollutant, visiblePollutants]);
+  }, [chartApiData, selectedPollutant, visiblePollutants, pollutantTypesWithStationUnits]);
 
   // Memoize chart options - dynamically set Y-axis label and min/max for X-axis
   const dynamicChartOptions = useMemo(() => {
     const options = structuredClone(getChartOptionsBase(darkMode));
-    const pollutantConfig = pollutantTypes[selectedPollutant];
+    const pollutantConfig = pollutantTypesWithStationUnits[selectedPollutant];
 
     // --- Disable the chart's internal title ---
     options.plugins.title.display = false;
@@ -614,16 +632,16 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
         : "Value";
 
     return options;
-  }, [timeView, selectedPollutant, chartApiData, darkMode]); // Added darkMode dependency
+  }, [timeView, selectedPollutant, chartApiData, darkMode, pollutantTypesWithStationUnits]); // Added darkMode dependency
 
   // Helpers to format labels with units (shared)
   const formatLabelWithUnitUI = (key) => {
-    const cfg = pollutantTypes[key] || {};
-    return labelWithUnitUI(key, cfg.label || key);
+    const cfg = pollutantTypesWithStationUnits[key] || {};
+    return labelWithUnitUI(key, cfg.label || key, location?.name);
   };
   const formatLabelWithUnitExport = (key) => {
-    const cfg = pollutantTypes[key] || {};
-    return labelWithUnitExport(key, cfg.label || key);
+    const cfg = pollutantTypesWithStationUnits[key] || {};
+    return labelWithUnitExport(key, cfg.label || key, location?.name);
   };
 
   // Prepare tabular data
@@ -781,7 +799,7 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
   if (!location) return null; // Should not happen if rendered conditionally in App
 
   const selectedPollutantLabel =
-    pollutantTypes[selectedPollutant]?.label || "Select Pollutant";
+    pollutantTypesWithStationUnits[selectedPollutant]?.label || "Select Pollutant";
   const timeViewLabel =
     timeView === "daily"
       ? "Last 24 Hours"
@@ -1119,7 +1137,7 @@ function InfoPanel({ location, onClose, apiBaseUrl, darkMode = false }) {
                   Pollutants:
                 </span>
                 {pollutants.map((pollutant) => {
-                  const config = pollutantTypes[pollutant];
+                  const config = pollutantTypesWithStationUnits[pollutant];
                   const isVisible = visiblePollutants.has(pollutant);
                   return (
                     <label
