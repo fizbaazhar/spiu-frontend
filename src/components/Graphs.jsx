@@ -24,7 +24,7 @@ import "chartjs-adapter-date-fns";
 import { format, parseISO } from "date-fns";
 import DownloadReport from "./DownloadReport.jsx";
 import { stationCoordinatesByCity } from "../data/stationCoordinates.js";
-import { labelWithUnitUI, displayNameForKey } from "../data/units.js";
+import { labelWithUnitUI, displayNameForKey, getUnit } from "../data/units.js";
 import { toPlottable, isErrorValue } from "../utils/errors.ts";
 
 ChartJS.register(
@@ -249,9 +249,10 @@ export default function Graphs({
             .map((p) => ({ x: p.x, y: p.y }));
           if (dataPoints.length === 0) continue;
           const color = getColor(colorIdx++);
+          const stationName = stationLabels[id] || id;
           const pollutantLabel =
-            pollutant === "AQI" ? "AQI" : labelWithUnitUI(pollutant);
-          const labelName = stationLabels[id] || id;
+            pollutant === "AQI" ? "AQI" : labelWithUnitUI(pollutant, null, stationName);
+          const labelName = stationName;
           built.push({
             label: `${labelName} • ${pollutantLabel}`,
             data: dataPoints,
@@ -287,10 +288,17 @@ export default function Graphs({
   const yAxisLabel = useMemo(() => {
     if (selectedPollutants.length === 1) {
       const key = selectedPollutants[0];
-      return key === "AQI" ? "AQI" : labelWithUnitUI(key);
+      if (key === "AQI") return "AQI";
+      // If only one station is selected, use its specific unit
+      if (selectedStations.length === 1) {
+        const stationName = stationLabels[selectedStations[0]] || selectedStations[0];
+        return labelWithUnitUI(key, null, stationName);
+      }
+      // For multiple stations, use default unit (they should all have the same unit anyway)
+      return labelWithUnitUI(key);
     }
     return "Value";
-  }, [selectedPollutants]);
+  }, [selectedPollutants, selectedStations, stationLabels]);
 
   const chartOptions = useMemo(() => {
     const opts = getTimeScaleOptions(
@@ -382,7 +390,7 @@ export default function Graphs({
     selectedStations.forEach((st) => {
       const stationLabel = stationLabels[st] || st;
       selectedPollutants.forEach((p) => {
-        const pollutantLabel = p === "AQI" ? "AQI" : labelWithUnitUI(p);
+        const pollutantLabel = p === "AQI" ? "AQI" : labelWithUnitUI(p, null, stationLabel);
         headers.push(normalizeHeader(`${stationLabel} • ${pollutantLabel}`));
         // Don't add Status header for AQI
         if (p !== "AQI") {
